@@ -77,6 +77,7 @@ jobs:
         REPO: ${{ secrets.DOCKER_REPO }}
       run: |
         docker build -t $USERNAME/$REPO:${GITHUB_SHA::7} -t $USERNAME/$REPO:latest .
+        
     - name: Docker push
       env:
         USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -86,6 +87,7 @@ jobs:
         docker login -u $USERNAME -p $PASSWORD
         docker push $USERNAME/$REPO:${GITHUB_SHA::7}
         docker push $USERNAME/$REPO:latest
+        
     - name: SSH Remote Commands
       uses: appleboy/ssh-action@master
       env:
