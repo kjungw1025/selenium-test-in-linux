@@ -20,6 +20,8 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(request -> request
+                        .anyRequest().permitAll())
                 .build();
     }
 
