@@ -91,16 +91,11 @@ jobs:
     - name: SSH Remote Commands
       uses: appleboy/ssh-action@master
       env:
-        USERNAME: ${{ secrets.DOCKER_USERNAME }}
         REPO: ${{ secrets.DOCKER_REPO }}
-        PORT: ${{ secrets.DOCKER_PORT }}
-        VOLUME: ${{ secrets.DOCKER_VOLUME }}
       with:
         host: ${{ secrets.SERVER_HOST }}
         username: ubuntu
         key: ${{ secrets.PRIVATE_PEM_KEY }}
-        envs: GITHUB_SHA,USERNAME,REPO,PORT,VOLUME
+        envs: GITHUB_SHA,REPO
         script: |
-          docker pull $USERNAME/$REPO:${GITHUB_SHA::7}
-          docker stop $(docker ps -qa)
-          docker run -it -d --rm -p $PORT -v $VOLUME -e SPRING_CONFIG_LOCATION=/app/application.yml $USERNAME/$REPO:${GITHUB_SHA::7}
+          ./deploy.sh ${{ secrets.DOCKER_USERNAME }} $REPO ${GITHUB_SHA::7}
