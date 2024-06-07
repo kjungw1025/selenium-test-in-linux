@@ -1,6 +1,6 @@
-package com.example.demo.product.controller;
+package com.example.demo.domain.product.controller;
 
-import com.example.demo.product.service.CrawlingProductService;
+import com.example.demo.domain.product.service.CrawlingProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
