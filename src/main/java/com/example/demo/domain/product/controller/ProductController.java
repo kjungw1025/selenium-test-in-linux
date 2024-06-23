@@ -1,6 +1,7 @@
 package com.example.demo.domain.product.controller;
 
 import com.example.demo.domain.product.model.dto.list.SummarizedProductDto;
+import com.example.demo.domain.product.model.dto.response.ResponseSingleProductDto;
 import com.example.demo.domain.product.service.DownloadExcelService;
 import com.example.demo.domain.product.service.ParsingExcelService;
 import com.example.demo.domain.product.service.ParsingProspectusService;
@@ -11,14 +12,9 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/product")
@@ -40,8 +36,6 @@ public class ProductController {
 
     /**
      * 엑셀 파일 파싱 (프론트 호출 금지)
-     * @throws IOException
-     * @throws InvalidFormatException
      */
     @GetMapping("/parsing/excel")
     public void parsingExcelTest() throws IOException, InvalidFormatException {
@@ -55,6 +49,17 @@ public class ProductController {
     public ResponsePage<SummarizedProductDto> list(@ParameterObject Pageable pageable) {
         Page<SummarizedProductDto> result = productService.list(pageable);
         return new ResponsePage<>(result);
+    }
+
+    /**
+     * 상품 단건 조회
+     *
+     * @param id 조회할 상품 id
+     * @return 상품 상세 정보
+     */
+    @GetMapping("/{id}")
+    public ResponseSingleProductDto findOne(@PathVariable Long id) {
+        return productService.findOne(id);
     }
 
     //
