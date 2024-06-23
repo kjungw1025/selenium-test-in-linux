@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 @EnableScheduling
 @Slf4j
-public class CrawlingProductService {
+public class DownloadExcelService {
 
     @Value("${kofia.api-path}")
     private String url;
@@ -32,7 +32,7 @@ public class CrawlingProductService {
     @Value("${chrome.web-driver.path}")
     private String driverPath;
 
-    @Value("${chrome.file-download.path}")
+    @Value("${file.excel.path}")
     private String fileDownloadPath;
 
     public void crawlProduct() {
