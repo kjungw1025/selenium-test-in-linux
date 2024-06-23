@@ -83,7 +83,7 @@ public class ParsingExcelService {
             int rows = sheet.getPhysicalNumberOfRows();
             log.info("엑셀 행 개수 " + rows);
 
-            for (int r = 1; r < rows - 140; r++) {
+            for (int r = 1; r < rows; r++) {
                 row = sheet.getRow(r);
 
                 Cell bCell = row.getCell(1);    // 발행 회사
