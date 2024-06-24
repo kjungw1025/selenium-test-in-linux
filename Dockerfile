@@ -10,7 +10,6 @@ ENTRYPOINT ["java", "-jar", "application.jar"]
 RUN apt-get update && \
     apt-get install -y wget && \
     wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_125.0.6422.76-1_amd64.deb && \
-    dpkg -i google-chrome-stable_125.0.6422.76-1_amd64.deb && \
-    apt --fix-broken install -y && \
+    dpkg -i google-chrome-stable_125.0.6422.76-1_amd64.deb || apt --fix-broken install -y && \
     apt-get clean && \
     rm google-chrome-stable_125.0.6422.76-1_amd64.deb
