@@ -26,14 +26,14 @@ public class ProductController {
     private final ParsingProspectusService parsingProspectusService;
     private final ProductService productService;
 
-    /**
-     * 엑셀 파일 다운로드 (프론트 호출 금지)
-     */
-    @GetMapping("/download/excel")
-    public void downloadExcelTest() {
-        downloadExcelService.crawlProduct();
-    }
-
+//    /**
+//     * 엑셀 파일 다운로드 (프론트 호출 금지)
+//     */
+//    @GetMapping("/download/excel")
+//    public void downloadExcelTest() {
+//        downloadExcelService.crawlProduct();
+//    }
+//
     /**
      * 엑셀 파일 파싱 (프론트 호출 금지)
      */

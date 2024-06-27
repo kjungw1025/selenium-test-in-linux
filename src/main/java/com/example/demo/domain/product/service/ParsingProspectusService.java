@@ -9,6 +9,7 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,7 +18,6 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 @Slf4j
 public class ParsingProspectusService {
-
 
     // 기초자산가격 변동성
 
@@ -131,8 +131,7 @@ public class ParsingProspectusService {
 
             // 찾은 tr 태그의 인덱스를 구함
             int indexOfTargetTr = Objects.requireNonNull(trElements.first()).elementSiblingIndex();
-            // 바로 다음 tr 태그를 가져옴
-            Element nextTr = doc.select("tr").get(indexOfTargetTr + 1);
+            Element nextTr = trElements.get(indexOfTargetTr);
 
             String innerHtml = nextTr.html();
             String[] parts = innerHtml.split("<br>");
@@ -168,10 +167,24 @@ public class ParsingProspectusService {
     }
 
     private Document fetchDocument(String url) throws IOException {
-        return Jsoup.connect(url)
-                .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15")
-                .timeout(10000)
-                .maxBodySize(0)
-                .get();
+
+        int retries = 3;
+        while (retries > 0) {
+            try {
+                return Jsoup.connect(url)
+                        .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15")
+                        .timeout(10000)
+                        .maxBodySize(0)
+                        .get();
+            } catch (SocketTimeoutException e) {
+                retries--;
+                if (retries == 0) {
+                    throw e;
+                }
+                log.info("Retrying... attempts left: " + retries);
+            }
+        }
+
+        return null;
     }
 }
