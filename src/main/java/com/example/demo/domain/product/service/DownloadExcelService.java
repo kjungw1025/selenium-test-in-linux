@@ -32,7 +32,7 @@ public class DownloadExcelService {
     @Value("${chrome.web-driver.path}")
     private String driverPath;
 
-    @Value("${file.excel.path}")
+    @Value("${folder.path}")
     private String fileDownloadPath;
 
     public void crawlProduct() {

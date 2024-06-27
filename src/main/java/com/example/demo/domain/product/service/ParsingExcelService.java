@@ -83,7 +83,17 @@ public class ParsingExcelService {
             int rows = sheet.getPhysicalNumberOfRows();
             log.info("엑셀 행 개수 " + rows);
 
+            int cntForSleep = 1;
             for (int r = 1; r < rows; r++) {
+                if (cntForSleep % 20 == 0) {
+                    try {
+                        Thread.sleep(5000); // 5초 일시 중지
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        log.error("Thread interrupted: ", e);
+                    }
+                }
+
                 row = sheet.getRow(r);
 
                 Cell bCell = row.getCell(1);    // 발행 회사
@@ -147,6 +157,7 @@ public class ParsingExcelService {
                             .build();
                     productRepository.save(product);
                 }
+                cntForSleep++;
             }
 
         } catch (IOException | InvalidFormatException e) {
