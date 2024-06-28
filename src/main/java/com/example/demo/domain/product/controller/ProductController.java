@@ -34,13 +34,13 @@ public class ProductController {
 //        downloadExcelService.crawlProduct();
 //    }
 //
-    /**
-     * 엑셀 파일 파싱 (프론트 호출 금지)
-     */
-    @GetMapping("/parsing/excel")
-    public void parsingExcelTest() throws IOException, InvalidFormatException {
-        parsingExcelService.parsingExcel();
-    }
+//    /**
+//     * 엑셀 파일 파싱 (프론트 호출 금지)
+//     */
+//    @GetMapping("/parsing/excel")
+//    public void parsingExcelTest() throws IOException, InvalidFormatException {
+//        parsingExcelService.parsingExcel();
+//    }
 
     /**
      * 모든 상품 조회
