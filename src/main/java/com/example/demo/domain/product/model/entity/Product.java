@@ -1,9 +1,11 @@
 package com.example.demo.domain.product.model.entity;
 
+import com.example.demo.domain.product.model.ProductState;
 import com.example.demo.global.base.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -28,8 +30,8 @@ public class Product extends BaseEntity {
     @NotNull
     private String name;
 
-    @NotNull
-    private int equityCount;
+//    @NotNull
+//    private int equityCount;
 
     @NotNull
     private String equities;
@@ -68,7 +70,9 @@ public class Product extends BaseEntity {
     private String earlyRepaymentEvaluationDates;
 
     @NotNull
-    private boolean ready;
+    @ColumnDefault("'INACTIVE'")
+    @Enumerated(EnumType.STRING)
+    private ProductState productState;
 
     @Builder
     private Product (@NonNull String publisher,
@@ -86,7 +90,7 @@ public class Product extends BaseEntity {
                      @NonNull String remarks,
                      String summaryInvestmentProspectusLink,
                      String earlyRepaymentEvaluationDates,
-                     boolean ready) {
+                     ProductState productState) {
         this.publisher = publisher;
 //        this.creditRating = creditRating;
         this.name = name;
@@ -102,6 +106,6 @@ public class Product extends BaseEntity {
         this.remarks = remarks;
         this.summaryInvestmentProspectusLink = summaryInvestmentProspectusLink;
         this.earlyRepaymentEvaluationDates = earlyRepaymentEvaluationDates;
-        this.ready = ready;
+        this.productState = productState;
     }
 }

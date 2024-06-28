@@ -1,5 +1,6 @@
 package com.example.demo.domain.product.service;
 
+import com.example.demo.domain.product.model.ProductState;
 import com.example.demo.domain.product.model.entity.Product;
 import com.example.demo.domain.product.repository.ProductRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -136,7 +137,7 @@ public class ParsingExcelService {
                                     )
                                 )
                             )
-                            .ready(true)
+                            .productState(ProductState.ACTIVE)
                             .build();
                     productRepository.save(product);
                 } else {
@@ -153,7 +154,7 @@ public class ParsingExcelService {
                             .type(lCell.getStringCellValue())
                             .link(nCell.getStringCellValue())
                             .remarks(pCell.getStringCellValue())
-                            .ready(false)
+                            .productState(ProductState.INACTIVE)
                             .build();
                     productRepository.save(product);
                 }

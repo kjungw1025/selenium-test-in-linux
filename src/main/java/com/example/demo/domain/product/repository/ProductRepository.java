@@ -11,12 +11,12 @@ import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query("select p from Product p order by p.lastModifiedAt DESC ")
+    @Query("select p from Product p where p.productState = 'ACTIVE' order by p.lastModifiedAt DESC ")
     Page<Product> findAll(Pageable pageable);
 
-    @Query("select p from Product p where p.name = :name ")
+    @Query("select p from Product p where p.productState = 'ACTIVE' and p.name = :name ")
     Optional<Product> findProductByName(@Param("name") String name);
 
-    @Query("select p from Product p where p.id = :id ")
+    @Query("select p from Product p where p.productState = 'ACTIVE' and p.id = :id ")
     Product findOne(@Param("id") Long id);
 }
